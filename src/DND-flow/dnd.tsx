@@ -52,6 +52,19 @@ const DnDFlow = () => {
 	const onLoad = (_reactFlowInstance: OnLoadParams) =>
 		setReactFlowInstance(_reactFlowInstance)
 
+	function onClickStart() {
+		console.log("start")
+		elements.forEach((element, index) => {
+			if('runtime' in element.data) {
+				element.data.runtime()
+			}
+		})
+	}
+
+	var runFunction = () => {
+		console.log("run")
+	}
+
 	const onDrop = (event: DragEvent) => {
 		event.preventDefault()
 
@@ -65,7 +78,7 @@ const DnDFlow = () => {
 				id: getId(),
 				type,
 				position,
-				data: { label: `${type} node` },
+				data: { label: `${type} node`, runtime: runFunction},
 			}
 
 			setElements((es) => es.concat(newNode))
@@ -92,6 +105,7 @@ const DnDFlow = () => {
 					</ReactFlow>
 				</div>
 				<Sidebar />
+				<button onClick={onClickStart}>Start</button>
 			</ReactFlowProvider>
 		</div>
 	)
